@@ -22,7 +22,6 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: 'cron(0 0 1 * ? *)'
-            # Input: '{ "slack_channel" : "", "slack_expired_date" : "31", "slack_count" : 200}'
             Input: !Sub '{ "slack_channel" : "${SlackChannel}", "slack_expired_date" : 31, "slack_count" : ${SlackCount}}'
       Policies:
         - AWSLambdaExecute
