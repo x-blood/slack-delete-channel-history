@@ -11,11 +11,16 @@ def lambda_handler(event, context):
     print('Start lambda_handler')
 
     token= os.environ['SlackToken']
-    channel = os.environ['SlackChannel']
-    count = os.environ['SlackCount']
+    print('env token : %s', token)
+    channel = event['slack_channel']
+    print('env channel : %s', channel)
+    count = event['slack_count']
+    print('env count : %s', count)
+    expired_date = event['slack_expired_date']
+    print('env expired_date : %s', expired_date)
 
     now = datetime.datetime.now()
-    delta = timedelta(days=+31)
+    delta = timedelta(days=+expired_date)
     target_datetime = now - delta
     epoch_time = target_datetime.timestamp()
     print('epoch_time : %s' % epoch_time)
