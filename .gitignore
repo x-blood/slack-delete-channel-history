@@ -1,0 +1,9 @@
+# idea
+.idea
+
+# python
+myvenv
+
+# node
+node_modules
+.serverless
