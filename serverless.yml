@@ -16,10 +16,7 @@ provider:
       Resource: "*"
   environment:
     TZ: 'Asia/Tokyo'
-    SLACK_DELETE_CHANNEL_HISTORY_WEB_HOOK_URL: ${ssm:/slack-delete-channel-history/web-hook-url}
-    SLACK_DELETE_CHANNEL_HISTORY_CHANNEL_NAME: ${ssm:/slack-delete-channel-history/channel-name}
-    SLACK_DELETE_CHANNEL_HISTORY_ACCOUNT_NAME: ${ssm:/slack-delete-channel-history/account-name}
-    MAX_DELETABLE_OBJECT_COUNT: 300
+    SLACK_DELETE_CHANNEL_HISTORY_APP_TOKEN: ${ssm:/slack-delete-channel-history/app-token}
 
 custom:
   pythonRequirements:
@@ -41,5 +38,6 @@ functions:
           rate: cron(0 0 1 * ? *)
           enabled: true
           input:
-            TARGET_CHANNEL: ${ssm:/slack-delete-channel-history/target-channel-name-1}
-            EXPIRED_DATE: 365
+            TARGET_CHANNEL_ID: ${ssm:/slack-delete-channel-history/target-channel-id-1}
+            EXPIRED_DATE: 31
+            MAX_DELETABLE_OBJECT_COUNT: 300
