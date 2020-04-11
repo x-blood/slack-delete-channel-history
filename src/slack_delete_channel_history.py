@@ -1,16 +1,16 @@
 import urllib.request
 import urllib.parse
 import datetime
-import time
 import json
 import time
 import os
 from datetime import timedelta
 
+
 def lambda_handler(event, context):
     print('Start lambda_handler')
 
-    token= os.environ['SLACK_DELETE_CHANNEL_HISTORY_APP_TOKEN']
+    token = os.environ['SLACK_DELETE_CHANNEL_HISTORY_APP_TOKEN']
     print('env token : %s', token)
     channel = event['TARGET_CHANNEL_ID']
     print('env channel : %s', channel)
@@ -30,10 +30,10 @@ def lambda_handler(event, context):
     post_url = "https://slack.com/api/chat.postMessage"
 
     hist_params = {
-        'channel' : channel,
-        'token' : token,
-        'latest' : epoch_time,
-        'count' : count
+        'channel': channel,
+        'token': token,
+        'latest': epoch_time,
+        'count': count
     }
 
     req = urllib.request.Request(hist_url)
@@ -50,9 +50,9 @@ def lambda_handler(event, context):
     for m in data['messages']:
         print(m)
         delete_params = {
-            'channel' : channel,
-            'token' : token,
-            'ts' :  m["ts"]
+            'channel': channel,
+            'token': token,
+            'ts':  m["ts"]
         }
         req = urllib.request.Request(delete_url)
         delete_params = urllib.parse.urlencode(delete_params).encode('ascii')
@@ -63,15 +63,15 @@ def lambda_handler(event, context):
 
         print(body)
 
-        deleted_count+=1
+        deleted_count += 1
         time.sleep(2)
 
     req = urllib.request.Request(post_url)
     post_params = {
-        'channel' : channel,
-        'token' : token,
-        'text' : "31日前の通知情報を自動的に削除しました。 *`削除した件数：%s`* " % deleted_count
+        'channel': channel,
+        'token': token,
+        'text': "31日前の通知情報を自動的に削除しました。 *`削除した件数：%s`* " % deleted_count
     }
     post_params = urllib.parse.urlencode(post_params).encode('ascii')
     req.data = post_params
-    res = urllib.request.urlopen(req)
+    _ = urllib.request.urlopen(req)
