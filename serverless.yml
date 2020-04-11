@@ -1,0 +1,43 @@
+service: slack-delete-channel-history
+
+plugins:
+  - serverless-python-requirements
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ops
+  region: ap-northeast-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "logs:*"
+      Resource: "*"
+  environment:
+    TZ: 'Asia/Tokyo'
+    SLACK_DELETE_CHANNEL_HISTORY_APP_TOKEN: ${ssm:/slack-delete-channel-history/app-token}
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+package:
+  exclude:
+    - './serverless/**'
+    - './myvenv/**'
+    - './node_modules/**'
+
+functions:
+  function:
+    handler: src/slack_delete_channel_history.lambda_handler
+    timeout: 900
+    events:
+      - schedule:
+          name: 'slack-delete-channel-history'
+          rate: cron(0 0 1,15 * ? *)
+          enabled: true
+          input:
+            TARGET_CHANNEL_ID: ${ssm:/slack-delete-channel-history/target-channel-id-1}
+            EXPIRED_DATE: 31
+            MAX_DELETABLE_OBJECT_COUNT: 250
