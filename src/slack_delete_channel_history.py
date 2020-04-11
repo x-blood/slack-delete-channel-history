@@ -10,13 +10,13 @@ from datetime import timedelta
 def lambda_handler(event, context):
     print('Start lambda_handler')
 
-    token= os.environ['SlackToken']
+    token= os.environ['SLACK_DELETE_CHANNEL_HISTORY_APP_TOKEN']
     print('env token : %s', token)
-    channel = event['slack_channel']
+    channel = event['TARGET_CHANNEL_ID']
     print('env channel : %s', channel)
-    count = event['slack_count']
+    count = event['MAX_DELETABLE_OBJECT_COUNT']
     print('env count : %s', count)
-    expired_date = event['slack_expired_date']
+    expired_date = event['EXPIRED_DATE']
     print('env expired_date : %s', expired_date)
 
     now = datetime.datetime.now()
