@@ -70,7 +70,7 @@ def lambda_handler(event, context):
     post_params = {
         'channel': channel,
         'token': token,
-        'text': "31日前の通知情報を自動的に削除しました。 *`削除した件数：%s`* " % deleted_count
+        'text': "%d日前の通知情報を自動的に削除しました。 *`削除した件数：%d`* " % (expired_date, deleted_count)
     }
     post_params = urllib.parse.urlencode(post_params).encode('ascii')
     req.data = post_params
