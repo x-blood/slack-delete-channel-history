@@ -1,21 +1,9 @@
 # slack-delete-channel-history
 CloudWatch Eventsによって起動し、特定のチャンネルのメッセージを削除する。  
 
-## Setup
+## SETUP
 
-### 1. venv
-```
-python -m venv myvenv
-make venv_activate
-```
-
-### 2. 必要なパッケージの取得
-```
-# venvをアクティベートした後で
-make pip_install
-```
-
-## 3. Serverless Framework
+### 1. Serverless Framework
 ```
 # node v10.18.0以上
 npm install -g serverless
