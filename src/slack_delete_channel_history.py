@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     epoch_time = target_datetime.timestamp()
     print('epoch_time : %s' % epoch_time)
 
-    hist_url = "https://slack.com/api/channels.history"
+    hist_url = "https://slack.com/api/conversations.history"
     delete_url = "https://slack.com/api/chat.delete"
     post_url = "https://slack.com/api/chat.postMessage"
 
@@ -33,7 +33,7 @@ def lambda_handler(event, context):
         'channel': channel,
         'token': token,
         'latest': epoch_time,
-        'count': count
+        'limit': count
     }
 
     req = urllib.request.Request(hist_url)
